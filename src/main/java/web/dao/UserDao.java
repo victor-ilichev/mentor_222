@@ -1,45 +1,36 @@
 package web.dao;
 
 import org.springframework.stereotype.Repository;
-import org.hibernate.SessionFactory;
 import web.model.User;
 
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
 public class UserDao implements UserDaoInterface {
 
-    private final SessionFactory sessionFactory;
+    private final EntityManagerFactory entityManagerFactory;
 
-    public UserDao(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public UserDao(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
     }
 
     @Override
     @Transactional
-    @SuppressWarnings("unchecked")
     public List<User> listUsers() {
-        TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User", User.class);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        return query.getResultList();
+        return entityManager.createQuery("select u from User u", User.class).getResultList();
     }
 
     @Transactional
     @Override
     public User find(long id) {
-        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User u WHERE u.id=:id", User.class)
-                .setParameter("id", id);
-
-        User user = null;
-
-        try {
-            user = query.setMaxResults(1).getSingleResult();
-        } catch (NoResultException exception) {
-            //
-        }
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        User user = entityManager.find(User.class, id);
+        entityManager.detach(user);
 
         return user;
     }
@@ -48,18 +39,28 @@ public class UserDao implements UserDaoInterface {
     @Override
     @Transactional
     public void save(User user) {
-        sessionFactory.getCurrentSession().save(user);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(user);
+        entityManager.getTransaction().commit();
     }
 
     @Override
     @Transactional
     public void update(User user) {
-        sessionFactory.getCurrentSession().update(user);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.detach(user);
+        entityManager.getTransaction().begin();
+        entityManager.merge(user);
+        entityManager.getTransaction().commit();
     }
 
     @Override
     @Transactional
     public void delete(User user) {
-        sessionFactory.getCurrentSession().delete(user);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.remove(user);
+        entityManager.getTransaction().commit();
     }
 }

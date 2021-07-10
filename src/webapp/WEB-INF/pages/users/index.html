@@ -14,6 +14,9 @@
 <body>
     <article>
         <h4>Cars list</h4>
+        <p>
+            <a href="/users/new">Create one</a>
+        </p>
         <table>
             <thead>
                 <tr>
@@ -24,9 +27,16 @@
             </thead>
             <tbody>
                 <tr th:each="user: ${users}">
-                    <td th:text="${user.getId()}" />
+                    <td th:text="${user.getId()}"></td>
                     <td th:text="${user.getFirstName()}" />
                     <td th:text="${user.getLastName()}" />
+                    <td><a th:href="@{/users/{id}(id=${user.getId()})}">Show</a></td>
+                    <td><a th:href="@{/users/{id}/edit(id=${user.getId()})}">Edit</a></td>
+                    <td>
+                        <form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
+                            <input type="submit" value="Delete"/>
+                        </form>
+                    </td>
                 </tr>
             </tbody>
         </table>
