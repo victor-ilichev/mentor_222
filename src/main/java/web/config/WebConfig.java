@@ -16,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+import web.model.Role;
 import web.model.User;
 
 import javax.sql.DataSource;
@@ -82,9 +83,10 @@ public class WebConfig implements WebMvcConfigurer {
         props.put("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
         props.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
         props.put("spring.jpa.hibernate.ddl-auto", "update");
+        props.put("spring.jpa.properties.hibernate.enable_lazy_load_no_trans", "true");
 
         factoryBean.setHibernateProperties(props);
-        factoryBean.setAnnotatedClasses(User.class);
+        factoryBean.setAnnotatedClasses(User.class, Role.class);
 
         return factoryBean;
     }
