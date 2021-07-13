@@ -1,7 +1,6 @@
 package web.dao;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
 
 import javax.persistence.EntityManager;
@@ -9,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-@Transactional()
 public class UserDao implements UserDaoInterface {
 
     @PersistenceContext
@@ -36,7 +34,6 @@ public class UserDao implements UserDaoInterface {
 
     @Override
     public void update(User user) {
-        entityManager.detach(user);
         entityManager.merge(user);
     }
 
