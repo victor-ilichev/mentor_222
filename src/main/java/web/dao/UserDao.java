@@ -20,12 +20,17 @@ public class UserDao implements UserDaoInterface {
 
     @Override
     public User find(long id) {
-        User user = entityManager.find(User.class, id);
-        entityManager.detach(user);
-
-        return user;
+        return entityManager.find(User.class, id);
     }
 
+    @Override
+    public User findByEmail(String email) {
+        return
+            entityManager
+                .createQuery("select u from User u where u.email=:email", User.class)
+                .setParameter("email", email)
+                .getSingleResult();
+    }
 
     @Override
     public void save(User user) {

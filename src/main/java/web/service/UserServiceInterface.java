@@ -9,6 +9,8 @@ public interface UserServiceInterface {
 
     User find(long id);
 
+    User findByEmail(String email);
+
     void save(User user);
 
     void update(User user);

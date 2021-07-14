@@ -31,6 +31,11 @@ public class UserService implements UserServiceInterface {
    }
 
    @Override
+   public User findByEmail(String email) {
+      return userDao.findByEmail(email);
+   }
+
+   @Override
    public void update(User user) {
       userDao.update(user);
    }

@@ -1,12 +1,16 @@
 package web.model;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,4 +48,10 @@ public class Role {
     public void setUsers(Set<User> users) {
         this.users = users;
     }
+
+    @Override
+    public String getAuthority() {
+        return this.name;
+    }
+
 }

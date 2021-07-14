@@ -5,14 +5,14 @@
     <title>Show</title>
 </head>
 <body>
-<p th:text="${user.getFirstName() + ', ' + user.getLastName()}">VALUE</p>
-<p th:text="${'Email: ' + user.getEmail()}">VALUE</p>
-<p th:text="${user.getId()}">VALUE</p>
-
-<a th:href="@{/users/{id}/edit(id=${user.getId()})}">Edit</a>
-
-<form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
-    <input type="submit" value="Delete"/>
-</form>
+    <p th:text="${user.getFirstName() + ', ' + user.getLastName()}">VALUE</p>
+    <p th:text="${'Email: ' + user.getEmail()}">VALUE</p>
+    <p th:text="${user.getId()}">VALUE</p>
+    <p>
+<!--        <a th:href="@{/users/logout}">Logout</a>-->
+        <form th:method="POST" th:action="@{/users/logout}">
+            <input type="submit" value="Logout"/>
+        </form>
+    </p>
 </body>
 </html>
