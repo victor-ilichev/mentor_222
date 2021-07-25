@@ -4,6 +4,6 @@ import web.model.Car;
 
 import java.util.List;
 
-public interface CarsProviderInterface {
+public interface CarProvider {
     public List<Car> getCars(int limit);
 }

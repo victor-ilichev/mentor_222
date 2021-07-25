@@ -5,9 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import web.dao.UserDaoInterface;
 import web.model.User;
-import web.service.UserServiceInterface;
+import web.service.UserService;
 
 import javax.validation.Valid;
 
@@ -15,10 +14,10 @@ import javax.validation.Valid;
 @RequestMapping("/users")
 public class UsersController {
 
-    private final UserServiceInterface userService;
+    private final UserService userService;
 
     @Autowired
-    public UsersController(UserServiceInterface userService) {
+    public UsersController(UserService userService) {
         this.userService = userService;
     }
 

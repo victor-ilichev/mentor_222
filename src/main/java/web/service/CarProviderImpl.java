@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CarsProvider implements CarsProviderInterface {
+public class CarProviderImpl implements CarProvider {
     private final List<Car> carsList = new ArrayList<>();
 
-    public CarsProvider() {
+    public CarProviderImpl() {
         carsList.add(new Car("Mazda 6", "black", 2007));
         carsList.add(new Car("Honda civic", "white", 2017));
         carsList.add(new Car("Infinity QX70", "black", 2015));
